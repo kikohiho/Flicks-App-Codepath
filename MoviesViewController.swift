@@ -97,7 +97,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let imageURL = NSURL(string: baseURL + posterPath)
         
         
-        cell.textLabel!.text = title
+        cell.titleLabel.text = title
         cell.overviewLabel.text = overview
         cell.posterView.setImageWithURL(imageURL!)
         
