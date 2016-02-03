@@ -19,6 +19,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     var movies: [NSDictionary]?
     
+    var endpoint: String
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,17 +91,17 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let movie = movies![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
-        let posterPath = movie["poster_path"] as! String
-        
-        
-        
         let baseURL = "http://image.tmdb.org/t/p/w500"
-        let imageURL = NSURL(string: baseURL + posterPath)
         
+        if let posterPath = movie["poster_path"] as? String {
+        
+            let imageURL = NSURL(string: baseURL + posterPath)
+            cell.posterView.setImageWithURL(imageURL!)
+        }
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.posterView.setImageWithURL(imageURL!)
+        
         
         
         print ("row \(indexPath.row)")
@@ -112,7 +114,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         // ... Create the NSURLRequest (myRequest) ...
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let request = NSURLRequest(
             URL: url!,
             cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
